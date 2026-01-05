@@ -1,1 +1,83 @@
 /submission.csv
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+conda-env/
+anaconda/
+*.egg-info/
+
+# ===============================
+# Streamlit
+# ===============================
+.streamlit/secrets.toml
+
+# ===============================
+# Data files (IMPORTANT)
+# ===============================
+data/*.csv
+data/*.xlsx
+data/*.parquet
+
+# If you want to keep sample data:
+# !data/sample.csv
+
+# ===============================
+# Model artifacts
+# ===============================
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# ===============================
+# Outputs / submissions
+# ===============================
+submission.csv
+outputs/
+predictions/
+
+# ===============================
+# Logs
+# ===============================
+*.log
+
+# ===============================
+# OS files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# IDE / Editor
+# ===============================
+.vscode/
+.idea/
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.cpython-*
+
+# Streamlit cache
+.streamlit/
+
+# Model artifacts (optional but recommended)
+*.joblib
+*.pkl
+
+# Data (optional – if you don’t want to push data)
+data/*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
