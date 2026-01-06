@@ -1,31 +1,24 @@
 from sklearn.preprocessing import LabelEncoder
 
-CATEGORICAL_COLS = [
-    "RSI_signal",
-    "Stoch_O_signal",
-    "ichimoku_c_signal",
-    "fibonacci_signal",
-    "Bollinger_signal",
-    "exchange",
-]
-
 
 def encode_categorical(df, encoders=None):
     df = df.copy()
 
+    cat_cols = df.select_dtypes(include=["object"]).columns
+
     if encoders is None:
         encoders = {}
 
-    for col in CATEGORICAL_COLS:
-        if col in df.columns:
-            if col not in encoders:
-                le = LabelEncoder()
-                df[col] = df[col].astype(str)
-                df[col] = le.fit_transform(df[col])
-                encoders[col] = le
+        for col in cat_cols:
+            le = LabelEncoder()
+            df[col] = le.fit_transform(df[col].astype(str))
+            encoders[col] = le
+    else:
+        for col in cat_cols:
+            if col in encoders:
+                df[col] = encoders[col].transform(df[col].astype(str))
             else:
-                le = encoders[col]
-                df[col] = df[col].astype(str)
-                df[col] = le.transform(df[col])
+                # unseen column safety
+                df[col] = 0
 
     return df, encoders

@@ -1,14 +1,26 @@
 import streamlit as st
-from src.data_preprocessing import load_data, clean_data
+from src.api_data import load_market_data_from_api
+from src.data_preprocessing import prepare_api_data
 
 st.title("Data Overview")
 
-train, test = load_data("data/train.csv", "data/test.csv")
-train = clean_data(train)
+STOCKS = {
+    "Apple (AAPL)": "AAPL",
+    "Microsoft (MSFT)": "MSFT",
+    "Google (GOOGL)": "GOOGL",
+    "Amazon (AMZN)": "AMZN",
+    "Tesla (TSLA)": "TSLA",
+    "Meta (META)": "META",
+    "Nvidia (NVDA)": "NVDA"
+}
 
-st.subheader("Train dataset")
-st.dataframe(train.head(100))
+label = st.selectbox("Choose a stock", STOCKS.keys())
+symbol = STOCKS[label]
 
-st.write("Shape:", train.shape)
-st.write("Target distribution:")
-st.bar_chart(train["result"].value_counts())
+raw = load_market_data_from_api(symbol)
+data = prepare_api_data(raw)
+
+st.subheader(f"Preview — {label}")
+st.dataframe(data.head(100), use_container_width=True)
+
+st.write("Shape:", data.shape)
